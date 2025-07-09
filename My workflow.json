@@ -1,0 +1,464 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        -20
+      ],
+      "id": "1b0b95e4-47d5-4694-8a73-421e93424978",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "url": "https://rss.app/feeds/MphcJL6yLAwukZJj.xml",
+        "options": {
+          "ignoreSSL": false
+        }
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        180,
+        -20
+      ],
+      "id": "6b7aa374-3b5f-4d2b-bd12-692a4b8b5324",
+      "name": "RSS Read"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1ijsjhFVf_SXoN1rGpQgkofbHGszFwb2Hu0Prwnz6V_U",
+          "mode": "list",
+          "cachedResultName": "LinkedIn Job Listings",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ijsjhFVf_SXoN1rGpQgkofbHGszFwb2Hu0Prwnz6V_U/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ijsjhFVf_SXoN1rGpQgkofbHGszFwb2Hu0Prwnz6V_U/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Title": "={{ $('RSS Read').item.json.title }}",
+            "Link": "={{ $('RSS Read').item.json.link }}",
+            "Date": "={{ $('RSS Read').item.json.pubDate }}",
+            "Comapny Name": "={{ $('extract job details model').item.json.message.content.company_name }}",
+            "Benifits": "={{ $('extract job details model').item.json.message.content.benefits }}",
+            "Job Description": "={{ $('extract job details model').item.json.message.content.job_description }}",
+            "Rating": "={{ $('job rating model').item.json.choices[0].message.content.score }}",
+            "Cover Letter": "={{ $json.choices[0].message.content.cover_letter }}",
+            "Email": "={{ $('extract job details model').item.json.message.content.email }}"
+          },
+          "matchingColumns": [
+            "Link"
+          ],
+          "schema": [
+            {
+              "id": "Title",
+              "displayName": "Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Job Description",
+              "displayName": "Job Description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Link",
+              "displayName": "Link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Date",
+              "displayName": "Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Rating",
+              "displayName": "Rating",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Comapny Name",
+              "displayName": "Comapny Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Benifits",
+              "displayName": "Benifits",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Job Description",
+              "displayName": "Job Description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Cover Letter",
+              "displayName": "Cover Letter",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        1860,
+        -20
+      ],
+      "id": "b3e44b1c-5fb0-4891-9d85-013cee0ed05f",
+      "name": "Append or update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Dk5lPFUQofowf751",
+          "name": "Unnamed credential"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "maxItems": "={{ 2 }}"
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        380,
+        -20
+      ],
+      "id": "bef2cfcd-4856-42b7-989a-351bae4e929c",
+      "name": "Limit"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.link }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        600,
+        -20
+      ],
+      "id": "583ab7a7-14f5-46e4-8ef6-5be7acc4fb3b",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "resource": "draft",
+        "subject": "={{ $json.Title }}",
+        "message": "={{ $json['Cover Letter'] }}",
+        "options": {
+          "sendTo": "={{ $json.Email }}"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        2120,
+        -20
+      ],
+      "id": "c7916f1b-e05d-4958-b584-f0d5c170dec9",
+      "name": "Create a draft",
+      "webhookId": "b9c6834f-25f6-402c-90f5-fedb29113229",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "BoyQHY27HDZT9EeA",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "you are an intelligent bot capable of pulling out data from a job listing site",
+              "role": "system"
+            },
+            {
+              "content": "=here is the job site:\n {{ $json.data }}"
+            },
+            {
+              "content": "output the data in JSON format, using the following structure:\n\n{\n\"company_name\":\"\",\n\"benifits\":\"\", //medical, salary etc, please seperate by a commas\n\"job_description\": \"\",// 200 characters or less. describe the job not the company\n\"location\":\"\"\n\"email\": \"\" // email that the resume should be sent \n}",
+              "role": "assistant"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        800,
+        -20
+      ],
+      "id": "6ee7c120-10fd-4cef-a853-a5be2fd26e48",
+      "name": "extract job details model",
+      "credentials": {
+        "openAiApi": {
+          "id": "IRM6PgaZjnH3xA4E",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "you are an intelligent bot rating how closely a job listing is to a candidates skill set, on a score of 5.\na) 3 points for skills matching,1 point for mostly matching\nb) 1 point for it being the right experience level.\nc) 1 point for it being a remote position.\nd) 1 point if past job experience matches the job role\ne) 1 point if the  skills on the resume align with the job\nf) 3 points if i meet the job qualifications posted based on my resume",
+              "role": "system"
+            },
+            {
+              "content": "=here is the job listing details:\n{{ $('HTTP Request').item.json.data }}\nhere is the candidate's resume:\n\nSHEHAN RASHMIKA\n\nABOUT ME\n\nI am a passionate Data Science undergraduate with deep interest in the potential of Machine Learning .AI and Data Engineering, including foundational knowledge of statistical concepts, Big Data and Cloud Computing concepts .I enjoy turning data into meaningful insights and I am passionate about using technology to solve real-world problems. I’m always eager to learn, adapt, and grow, and I thrive in environments where collaboration and innovation are encouraged. I’m excited to apply my skills, learn from experienced professionals, gain hands-on experience, work with diverse teams, and make a meaningful impact.\n\nEDUCATION\n\n2022 – Present\n\nData Science Undergraduate\n\nSri Lanka Institute of Information Technology (SLIIT)  \nB. Sc. (Hons) Information Technology Specialized in Data Science  \n* President - Data Science Student Community (2025-2026)\n\n2017 – 2020  \n(3 Years )\n\nGCE A/L in Physical Science stream\n\nMaths: C Chemistry: C Physics: C\n\nSKILLS\n\n- Libraries  \n  Pandas, Matplotlib, NumPy, Scikit-Learn  \n\n- Languages  \n  Python , Java, SQL  \n\n- Web & API Frameworks  \n  Flask, FastAPI, Streamlit  \n\n- Cloud Platforms  \n  AWS, AZURE  \n\n- MLOps Tools  \n  Git , Docker & Docker Compose , MLflow , Jenkins, YAML , CI/CD Pipeline Design  \n\n- Soft Skills  \n  Problem Solving, Analytical Thinking, Adaptability and Teamwork  \n\nPROJECTS\n\nRAG Based Financial Research Assistant (personal project)  \n- Developed a RAG based web application that processes Microsoft annual report PDFs and delivers context-aware financial insights using Google Gemini API, ChromaDB, and Sentence Transformers to analyze Microsoft’s annual report. Implemented PDF text extraction, semantic document retrieval, and query augmentation to enable context-aware responses.  \n- Tech used: Google Gemini API, Sentence Transformers, LangChain, ChromaDB, Streamlit  \n\nText Summarization web App – Team Leader  \n- Developed a NLP application using BART to generate concise summaries. A special feature of the model is its ability to summarize content directly from web links. Additionally, the model integrates sentiment analysis, keyword extraction, and topic modeling for enhanced user experience.  \n- Tech used: Python,Transformers, NLTK, Scikit-Learn, Flask, MongoDb  \n\nWine Quality Prediction Web App – Team Leader\n\n- Developed a machine learning classification model to predict wine quality based on various chemical properties. Designed and implemented the model using Python, built the backend with Flask, and successfully deployed the application on Heroku.\n- Tech used: Python, Flask, Scikit-Learn, Pandas\n\nCERTIFICATIONS\n\n- Microsoft Certified: Azure AI Fundamentals\n- MLOps Bootcamp: Mastering AI Operations for Success - AIOps -Udemy\n\nDeveloped skills in Python for MLOps, ML model packaging & deployment, and experiment tracking with MLflow. Skilled in Docker for scalable deployment and FastAPI, Streamlit, Flask for ML applications. Implemented CI/CD pipelines using GitHub Actions & Jenkins and enhanced monitoring with Prometheus & Grafana. Basic foundation in Linux for MLOps.\n\n- AI/ML Engineer - Stage 1 - SLIIT\n- Academy Accreditation - Databricks Fundamentals\n- Programming in Python - 2. Python Programming - University of Moratuwa\n- NEXTTECH Workshop in Data engineering and Data visualization organized by NEXT SriLanka\n\nSELF LEARNING\n\n- [2025] Tensorflow 2: Deep Learning & Artificial Intelligence(Lazy Programmer Inc.) - (Ongoing, Auditing)\n- Completed Deep Learning Crash Course for Beginners on freecodecamp.org Youtube Channel\n- Completed RAG Fundamentals and Advanced Techniques – Full Course on freecodecamp.org Youtube Channel\n- AWS Cloud computing course offered by AWS.\n- Azure Lab Activities using free student credits\n\n"
+            },
+            {
+              "content": "return JSON data structured the following way:\n{\n\"score\":\"\"\n}",
+              "role": "assistant"
+            }
+          ]
+        },
+        "simplify": false,
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        1160,
+        -20
+      ],
+      "id": "3474f2de-36b4-40e0-8cca-3ca0eec437f7",
+      "name": "job rating model",
+      "credentials": {
+        "openAiApi": {
+          "id": "IRM6PgaZjnH3xA4E",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "You're an intelligent bot perfect at creating cover letters for jobs in IT industry. Please take the candidates resume and create a customized cover letter to the job.",
+              "role": "system"
+            },
+            {
+              "content": "=Here is the job listing details:\nTitle:{{ $('RSS Read').item.json.title }}\nDescription:{{ $('extract job details model').item.json.message.content.job_description }}\nName:{{ $('extract job details model').item.json.message.content.company_name }}\nLocation:{{ $('extract job details model').item.json.message.content.location }}\n\nhere is candidate's resume:\nSHEHAN RASHMIKA\n\nABOUT ME\n\nI am a passionate Data Science undergraduate with deep interest in the potential of Machine Learning .AI and Data Engineering, including foundational knowledge of statistical concepts, Big Data and Cloud Computing concepts .I enjoy turning data into meaningful insights and I am passionate about using technology to solve real-world problems. I’m always eager to learn, adapt, and grow, and I thrive in environments where collaboration and innovation are encouraged. I’m excited to apply my skills, learn from experienced professionals, gain hands-on experience, work with diverse teams, and make a meaningful impact.\n\nEDUCATION\n\n2022 – Present\n\nData Science Undergraduate\n\nSri Lanka Institute of Information Technology (SLIIT)  \nB. Sc. (Hons) Information Technology Specialized in Data Science  \n* President - Data Science Student Community (2025-2026)\n\n2017 – 2020  \n(3 Years )\n\nGCE A/L in Physical Science stream\n\nMaths: C Chemistry: C Physics: C\n\nSKILLS\n\n- Libraries  \n  Pandas, Matplotlib, NumPy, Scikit-Learn  \n\n- Languages  \n  Python , Java, SQL  \n\n- Web & API Frameworks  \n  Flask, FastAPI, Streamlit  \n\n- Cloud Platforms  \n  AWS, AZURE  \n\n- MLOps Tools  \n  Git , Docker & Docker Compose , MLflow , Jenkins, YAML , CI/CD Pipeline Design  \n\n- Soft Skills  \n  Problem Solving, Analytical Thinking, Adaptability and Teamwork  \n\nPROJECTS\n\nRAG Based Financial Research Assistant (personal project)  \n- Developed a RAG based web application that processes Microsoft annual report PDFs and delivers context-aware financial insights using Google Gemini API, ChromaDB, and Sentence Transformers to analyze Microsoft’s annual report. Implemented PDF text extraction, semantic document retrieval, and query augmentation to enable context-aware responses.  \n- Tech used: Google Gemini API, Sentence Transformers, LangChain, ChromaDB, Streamlit  \n\nText Summarization web App – Team Leader  \n- Developed a NLP application using BART to generate concise summaries. A special feature of the model is its ability to summarize content directly from web links. Additionally, the model integrates sentiment analysis, keyword extraction, and topic modeling for enhanced user experience.  \n- Tech used: Python,Transformers, NLTK, Scikit-Learn, Flask, MongoDb  \n\nWine Quality Prediction Web App – Team Leader\n\n- Developed a machine learning classification model to predict wine quality based on various chemical properties. Designed and implemented the model using Python, built the backend with Flask, and successfully deployed the application on Heroku.\n- Tech used: Python, Flask, Scikit-Learn, Pandas\n\nCERTIFICATIONS\n\n- Microsoft Certified: Azure AI Fundamentals\n- MLOps Bootcamp: Mastering AI Operations for Success - AIOps -Udemy\n\nDeveloped skills in Python for MLOps, ML model packaging & deployment, and experiment tracking with MLflow. Skilled in Docker for scalable deployment and FastAPI, Streamlit, Flask for ML applications. Implemented CI/CD pipelines using GitHub Actions & Jenkins and enhanced monitoring with Prometheus & Grafana. Basic foundation in Linux for MLOps.\n\n- AI/ML Engineer - Stage 1 - SLIIT\n- Academy Accreditation - Databricks Fundamentals\n- Programming in Python - 2. Python Programming - University of Moratuwa\n- NEXTTECH Workshop in Data engineering and Data visualization organized by NEXT SriLanka\n\nSELF LEARNING\n\n- [2025] Tensorflow 2: Deep Learning & Artificial Intelligence(Lazy Programmer Inc.) - (Ongoing, Auditing)\n- Completed Deep Learning Crash Course for Beginners on freecodecamp.org Youtube Channel\n- Completed RAG Fundamentals and Advanced Techniques – Full Course on freecodecamp.org Youtube Channel\n- AWS Cloud computing course offered by AWS.\n- Azure Lab Activities using free student credits {{ $('extract job details model').item.json.message.content.job_description }}"
+            },
+            {
+              "content": "Please return JSON data structured the following way:\n{\n\"cover_letter\": \"\"\n}",
+              "role": "assistant"
+            }
+          ]
+        },
+        "simplify": false,
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        1500,
+        -20
+      ],
+      "id": "4842885e-b188-4600-ba84-839461b107be",
+      "name": "cover letter creation model",
+      "credentials": {
+        "openAiApi": {
+          "id": "IRM6PgaZjnH3xA4E",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "RSS Read",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS Read": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "extract job details model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append or update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Create a draft",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "extract job details model": {
+      "main": [
+        [
+          {
+            "node": "job rating model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "job rating model": {
+      "main": [
+        [
+          {
+            "node": "cover letter creation model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "cover letter creation model": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "95accedd-9f7b-44a1-aa38-6d0de7a52592",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "eea159eddb9abb51ba340c84665f4cd6b227a0f212f262f019250f0df5cb005a"
+  },
+  "id": "58sRmAeF1JOJoeed",
+  "tags": []
+}
