@@ -9,9 +9,9 @@ Rates job matches based on my resume using AI (GPT-4O-MINI)
 Generates personalized cover letters for each job posting using AI (GPT-4O-MINI)
 Rate each job based on how relevant to applicant's skills
 
-⦁	Logs and manages applications efficiently in Google Sheets
+  ⦁	Logs and manages applications efficiently in Google Sheets
 
-⦁	Create draft mail for each job
+  ⦁	Create draft mail for each job
 
 This automation saves countless hours of manual work and ensures I focus only on the most relevant opportunities. It’s beginner-friendly, scalable, and customizable for any job search.
 
