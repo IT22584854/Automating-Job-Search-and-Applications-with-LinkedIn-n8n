@@ -29,7 +29,6 @@ This automation saves countless hours of manual work and ensures I focus only on
 
 ![Screenshot 2025-07-09 145836](https://github.com/user-attachments/assets/aa60687b-5ed8-4f7e-895c-85973da74e33)
 
-I am eager to further develop and enhance this project, adding more features and improving its capabilities. Looking forward to exploring new possibilities and making this automation even more powerful!
-
 spreadsheet link: https://docs.google.com/spreadsheets/d/1ijsjhFVf_SXoN1rGpQgkofbHGszFwb2Hu0Prwnz6V_U/edit?usp=sharing
 
+I am eager to further develop and enhance this project, adding more features and improving its capabilities. Looking forward to exploring new possibilities and making this automation even more powerful!
