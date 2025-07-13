@@ -21,11 +21,9 @@ This automation saves countless hours of manual work and ensures I focus only on
 
 ![Screenshot 2025-07-09 145419](https://github.com/user-attachments/assets/b51c110d-8e15-42bc-b3a8-7b762d1dd7a3)
 
-
-![Screenshot 2025-07-09 145525](https://github.com/user-attachments/assets/c6be5c20-8878-40f7-9579-33c38a9a04c2)
-
 ![Screenshot 2025-07-09 145757](https://github.com/user-attachments/assets/6a43955a-2f64-4295-af05-de2230e92956)
 
+![Screenshot 2025-07-09 145525](https://github.com/user-attachments/assets/c6be5c20-8878-40f7-9579-33c38a9a04c2)
 
 ![Screenshot 2025-07-09 145836](https://github.com/user-attachments/assets/aa60687b-5ed8-4f7e-895c-85973da74e33)
 
